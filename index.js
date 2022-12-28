@@ -11,6 +11,8 @@ const routesNotFound = require('./src/route/notFound');
 const routesUser = require('./src/route/user');
 const routesCategories = require('./src/route/category');
 const routesBank = require('./src/route/bank');
+const routesDDL = require('./src/route/dropdownslists');
+const routesAccount = require('./src/route/account');
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use(routesCategories);
 app.use(routesBank);
 app.use(routesUser);
+app.use(routesDDL);
+app.use(routesAccount);
 
 /** If route is not found or not allowed */
 app.use(routesNotFound);
