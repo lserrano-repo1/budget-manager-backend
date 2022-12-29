@@ -13,6 +13,7 @@ const routesCategories = require('./src/route/category');
 const routesBank = require('./src/route/bank');
 const routesDDL = require('./src/route/dropdownslists');
 const routesAccount = require('./src/route/account');
+const routesTransactions = require('./src/route/transactions');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(routesBank);
 app.use(routesUser);
 app.use(routesDDL);
 app.use(routesAccount);
+app.use(routesTransactions);
 
 /** If route is not found or not allowed */
 app.use(routesNotFound);
