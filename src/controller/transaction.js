@@ -50,8 +50,36 @@ module.exports.create  = async(req,res,next)=>{
  * @param {*} next 
  */
 module.exports.getAll = async(req,res,next) => {
+    console.log("--- Transanction Controller: Get All ---");
     try {
         const {rows} =await Transaction.getAll();
+        res.status(200).json({data:rows});
+    } catch (error) {
+        res.status(400).json({error:error});
+    }
+};
+
+
+/**
+ * Gets transactions by id
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+module.exports.getById = async(req,res,next)=>{
+    console.log("--- Transanction Controller: Get by id ---");
+    const {trnId} = req.params;
+    console.log("trnId:");
+    console.log(trnId);
+
+    const inputParams ={
+        trnId: Number(trnId),
+    };
+
+    console.info("inputParams:");
+    console.info(inputParams);
+    try {
+        const {rows} =await Transaction.getById(inputParams);
         res.status(200).json({data:rows});
     } catch (error) {
         res.status(400).json({error:error});
@@ -80,7 +108,7 @@ console.info(req.body);
     console.info(inputParams);
 
     try {
-        const {rows} = await Transaction.filters(inputParams);
+        const {rows} = await Transaction.tranFiltered(inputParams);
         res.status(200).json({data:rows});
     } catch (error) {
         res.status(400).json({error:error});

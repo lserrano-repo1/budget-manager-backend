@@ -125,7 +125,7 @@ module.exports.getByAccNumberExact = async(req,res,next) => {
     const {accNumber} = req.params;
     console.log("accNumber:");
     console.log(accNumber);
-
+console.log( req.params);
     const inputParams ={
         accNumber: Number(accNumber),
     };
@@ -267,5 +267,41 @@ module.exports.deleteById = async(req,res,next)=>{
     }
 
 }
+
+
+
+
+/**
+ * Gets currency for any given account number
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ * @returns 
+ */
+module.exports.findAccountCurrency = async (req, res, next) => {
+    console.log('--- Account Controller: Find account currency ---');
+    const { accNumber } = req.params;
+    console.log('accNumber:');
+    console.log(accNumber);
+
+    if (accNumber !== '') {
+        const inputParams = {
+            accNumber,
+        };
+
+        try {
+            
+            const {rows} =await Account.findAccountCurrency(inputParams);
+            res.status(200).json({rows});
+
+        } catch (error) {
+            return res.status(400).json({ error: error });
+        }
+    } else {
+        return res
+            .status(400)
+            .json({ message: 'Cannot find currency for the given account number' });
+    }
+};
 
 

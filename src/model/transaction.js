@@ -105,7 +105,7 @@ module.exports.getById = ({ trnId }) => {
 };
 
 
-module.exports.filters = (inParams)=>{
+module.exports.tranFiltered = (inParams)=>{
     console.log('--- Transaction Model: Filter by data, category or account ---');
     console.log("params: {trnCreationDate, catId, accId}");
     console.log(inParams);

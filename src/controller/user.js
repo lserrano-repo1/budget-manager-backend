@@ -50,6 +50,8 @@ module.exports.userLogin = async(req,res,next)=>{
 
         return res.status(200).json({
             message: "Login data is not valid",
+            email: "",
+            token: "",
         });
 
     } catch(error){

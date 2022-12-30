@@ -149,7 +149,7 @@ module.exports.getByAccNumberExact = ({ accNumber }) => {
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 
         ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CURRENCY c 
         ON a.CUR_ID =c.CUR_ID  
-    WHERE ACC_NUMBER = accNumber `;
+    WHERE ACC_NUMBER = :accNumber `;
 
     return pool(sql_getByAccNumberExact, params);
 };
@@ -239,4 +239,32 @@ module.exports.deleteById = ({accId}) => {
             and ACC_BALANCE = 0`;
 
     return pool(sql_account_delete, inOutParams, { autoCommit: true });
+}
+
+
+/**
+ * Get currency for a given account number
+ * @param {*} param0 
+ * @returns 
+ */
+module.exports.findAccountCurrency = ({accNumber})=>{
+    console.log('--- Account Model: Find account currency ---');
+    console.log("{accNumber}");
+    console.log(accNumber);
+
+    const inOutParams = {
+        accNumber,
+    };
+    console.log('inOutParams:');
+    console.log(inOutParams);
+
+    const sql_account_currency = `SELECT 
+     a.ACC_NUMBER "accNumber"
+        , c.CUR_NAME "curName" 
+        , c.CUR_ID  "curId" 
+    FROM BUDGETMAN.ACCOUNT a 
+        INNER JOIN BUDGETMAN.CURRENCY c ON a.CUR_ID = c.CUR_ID
+    WHERE a.ACC_NUMBER  = :accNumber`;
+
+    return pool(sql_account_currency, inOutParams, { autoCommit: true });
 }
