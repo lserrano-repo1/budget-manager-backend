@@ -54,8 +54,8 @@ module.exports.getAll =()=>{
     , b.BNK_NAME "bankName" 
     , c.CUR_ABBREVIATION "curName"
     , ACC_NUMBER "accNumber"
-    , ACC_CREATION_DATE "accCreationDate"
-    , ACC_LAST_UPDATED "accLastUpdate"
+    , to_char(ACC_CREATION_DATE,'yyyy-MM-dd HH24:MM') "accCreationDate"
+    , to_char(ACC_LAST_UPDATED,'yyyy-MM-dd HH24:MM') "accLastUpdate"
     , ACC_BALANCE "accBalance"  
     FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.USERDATA u 
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 

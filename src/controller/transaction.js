@@ -109,7 +109,7 @@ console.info(req.body);
 
     try {
         const {rows} = await Transaction.tranFiltered(inputParams);
-        res.status(200).json({data:rows});
+        res.status(200).json({rows});
     } catch (error) {
         res.status(400).json({error:error});
     }

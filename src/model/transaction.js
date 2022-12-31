@@ -121,15 +121,15 @@ module.exports.tranFiltered = (inParams)=>{
     , b.BNK_NAME "bankName"
     , c2.CAT_NAME "catName"
     , t2.TYP_NAME "tranType"
-    , t.TRN_AMOUNT 
-    , t.TRN_DESCRIPTION 
-    , t.TRN_CREATION_DATE 
+    , t.TRN_AMOUNT "tranAmount" 
+    , t.TRN_DESCRIPTION  "tranDescription"
+    , to_char(t.TRN_CREATION_DATE,'yyyy-MM-dd HH24:MM')  "tranDate" 
     FROM BUDGETMAN."TRANSACTION" t INNER JOIN BUDGETMAN.CURRENCY c
-    ON t.CUR_ID = c.CUR_ID INNER JOIN BUDGETMAN.ACCOUNT a 
-    ON t.ACC_ID = a.ACC_ID INNER JOIN BUDGETMAN.BANK b 
-    ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CATEGORIES c2 
-    ON t.CAT_ID = c2.CAT_ID INNER JOIN BUDGETMAN.TRANTYPE t2 
-    ON t.TYP_ID = t2.TYP_ID
+        ON t.CUR_ID = c.CUR_ID INNER JOIN BUDGETMAN.ACCOUNT a 
+        ON t.ACC_ID = a.ACC_ID INNER JOIN BUDGETMAN.BANK b 
+        ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CATEGORIES c2 
+        ON t.CAT_ID = c2.CAT_ID INNER JOIN BUDGETMAN.TRANTYPE t2 
+        ON t.TYP_ID = t2.TYP_ID
     WHERE ` + sqlParts.where;
 
     console.log("sql_filtered_transactions");
@@ -144,21 +144,23 @@ function buildWhereClause(inParams){
     const conditions = new Array();
     let values = new Array();
     
-    if(typeof inParams.trnCreationDate !== 'undefined'){
-        conditions.push(` trunc(t.TRN_CREATION_DATE) = to_date( :trnCreationDate ,'dd-MM-yyyy') `);
+    if(typeof inParams.trnCreationDate !== 'undefined' &&  inParams.trnCreationDate !== null){
+        console.info("Data param provided");
+        conditions.push(` trunc(t.TRN_CREATION_DATE) = to_date( :trnCreationDate ,'yyyy-MM-dd') `);
         values.push(inParams.trnCreationDate);
     };
 
-    if(typeof inParams.catId !== 'undefined'){
+    if(typeof inParams.catId !== 'undefined' && inParams.catId!==null){
         conditions.push(` t.CAT_ID = :catId `);
         values.push(parseInt(inParams.catId));
     }
 
-    if(typeof inParams.accId !== 'undefined'){
+    if(typeof inParams.accId !== 'undefined'  && inParams.accId!==null){
         conditions.push(` t.ACC_ID = :accId `);
         values.push(parseInt(inParams.accId));
     }
 
+    /** If not a single param is provided it will return all dataset */
     return {
         where: conditions.length > 0 ? conditions.join(' AND ') : '1=1'
         , values: values
