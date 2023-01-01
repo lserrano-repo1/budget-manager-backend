@@ -71,3 +71,13 @@ module.exports.getTranTypes = async(req,res,next)=>{
     res.status(400).json({error:error});
   }
 }
+
+
+module.exports.getAccounts = async(req,res,next)=>{
+  try {
+    const {rows} = await DDLists.ddlAccounts();
+    res.status(200).json({rows});
+  } catch (error) {
+    res.status(400).json({error:error});
+  }
+}

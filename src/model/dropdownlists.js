@@ -6,6 +6,7 @@ const ddlSqlBanks = `SELECT BNK_ID "value", BNK_NAME "label" FROM BUDGETMAN.BANK
 const ddlSqlCurrency = `SELECT CUR_ID "value", CUR_NAME "label" FROM BUDGETMAN.CURRENCY`;
 const ddlSqlCategories = `SELECT CAT_ID "value", CAT_NAME "label" FROM BUDGETMAN.CATEGORIES`;
 const ddlSqlTranType = `SELECT TYP_ID "value", TYP_NAME "label"  FROM TRANTYPE t `;
+const ddlSqlAccounts = `SELECT ACC_ID "value", (a.ACC_NUMBER || ' - ' || b.BNK_NAME ) "label" FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.BANK b ON a.BNK_ID =b.BNK_ID`
 
 /**
  * User's list
@@ -40,7 +41,12 @@ module.exports.ddlCategories =()=>{
 };
 
 
-
+/** Transactions types */
 module .exports.ddlTranType = ()=>{
     return pool(ddlSqlTranType);
+}
+
+/** All registered accounts and its associated banks */
+module.exports.ddlAccounts =()=>{
+    return pool(ddlSqlAccounts);
 }
