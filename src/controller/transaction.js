@@ -31,7 +31,7 @@ module.exports.create  = async(req,res,next)=>{
 
         res.status(200).json({
             message: "New transaction created",
-            bankId: outBinds.trnId[0]
+            trnId: outBinds.trnId[0]
         });
     } catch (error) {
         console.error(error);

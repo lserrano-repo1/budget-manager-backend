@@ -70,7 +70,7 @@ module.exports.getTranTypes = async(req,res,next)=>{
   } catch (error) {
     res.status(400).json({error:error});
   }
-}
+};
 
 
 module.exports.getAccounts = async(req,res,next)=>{
@@ -80,4 +80,26 @@ module.exports.getAccounts = async(req,res,next)=>{
   } catch (error) {
     res.status(400).json({error:error});
   }
-}
+};
+
+
+module.exports.getCurrencyByAccountId = async (req, res, next) => {
+    console.log('--- DDL Controller: getCurrencyByAccountId ---');
+    const { accId } = req.params;
+    console.log('accId:');
+    console.log(accId);
+
+    const inputParams = {
+        accId: Number(accId),
+    };
+
+    console.info('inputParams:');
+    console.info(inputParams);
+
+    try {
+        const { rows } = await DDLists.ddlCurrencyByAccountId(inputParams);
+        res.status(200).json({ rows });
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+};
