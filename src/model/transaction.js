@@ -127,10 +127,10 @@ module.exports.tranFiltered = (inParams)=>{
     FROM BUDGETMAN."TRANSACTION" t INNER JOIN BUDGETMAN.CURRENCY c
         ON t.CUR_ID = c.CUR_ID INNER JOIN BUDGETMAN.ACCOUNT a 
         ON t.ACC_ID = a.ACC_ID INNER JOIN BUDGETMAN.BANK b 
-        ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CATEGORIES c2 
+        ON a.BNK_ID =b.BNK_ID LEFT JOIN BUDGETMAN.CATEGORIES c2 
         ON t.CAT_ID = c2.CAT_ID INNER JOIN BUDGETMAN.TRANTYPE t2 
         ON t.TYP_ID = t2.TYP_ID
-    WHERE ` + sqlParts.where;
+    WHERE ` + sqlParts.where + ` order by TRN_ID DESC`;
 
     console.log("sql_filtered_transactions");
     console.log(sql_filtered_transactions);
@@ -144,18 +144,29 @@ function buildWhereClause(inParams){
     const conditions = new Array();
     let values = new Array();
     
-    if(typeof inParams.trnCreationDate !== 'undefined' &&  inParams.trnCreationDate !== null){
+    if(typeof inParams.trnCreationDate !== 'undefined' 
+        &&  inParams.trnCreationDate !== null 
+        && inParams.trnCreationDate !== '')
+    {
         console.info("Data param provided");
         conditions.push(` trunc(t.TRN_CREATION_DATE) = to_date( :trnCreationDate ,'yyyy-MM-dd') `);
         values.push(inParams.trnCreationDate);
     };
 
-    if(typeof inParams.catId !== 'undefined' && inParams.catId!==null){
+    if(typeof inParams.catId !== 'undefined'  
+         && inParams.catId!==null 
+        && inParams.catId!=='')
+    {
         conditions.push(` t.CAT_ID = :catId `);
         values.push(parseInt(inParams.catId));
+    } else if (inParams.catId===null ){
+        conditions.push(` t.CAT_ID is null `); /** This is necessary to display TRANSFERENCES */
     }
 
-    if(typeof inParams.accId !== 'undefined'  && inParams.accId!==null){
+    if(typeof inParams.accId !== 'undefined'  
+        && inParams.accId!==null 
+        && inParams.accId!=='')
+    {
         conditions.push(` t.ACC_ID = :accId `);
         values.push(parseInt(inParams.accId));
     }

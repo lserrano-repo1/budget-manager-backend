@@ -4,7 +4,7 @@ const {pool} = require('./../database/oracle');
 const ddlSqlUsers = `SELECT USR_ID "value", (USR_SALUTATION || ' ' || USR_FIRST_NAME || ' ' || USR_LAST_NAME) "label" FROM BUDGETMAN.USERDATA`;
 const ddlSqlBanks = `SELECT BNK_ID "value", BNK_NAME "label" FROM BUDGETMAN.BANK`;
 const ddlSqlCurrency = `SELECT CUR_ID "value", CUR_NAME "label" FROM BUDGETMAN.CURRENCY`;
-const ddlSqlCategories = `SELECT CAT_ID "value", CAT_NAME "label" FROM BUDGETMAN.CATEGORIES`;
+const ddlSqlCategories = `SELECT CAT_ID "value", CAT_NAME "label" FROM BUDGETMAN.CATEGORIES UNION ALL SELECT null "value", 'Account Transference' "label" FROM dual`;
 const ddlSqlTranType = `SELECT TYP_ID "value", TYP_NAME "label"  FROM TRANTYPE t `;
 const ddlSqlAccounts = `SELECT ACC_ID "value", (a.ACC_NUMBER || ' - ' || b.BNK_NAME ) "label" FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.BANK b ON a.BNK_ID =b.BNK_ID`;
 const ddlSqlCurrencyByAccountId =` SELECT c.CUR_ID "value", c.CUR_NAME "label" 
