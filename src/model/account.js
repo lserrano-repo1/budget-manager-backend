@@ -56,7 +56,7 @@ module.exports.getAll =()=>{
     , ACC_NUMBER "accNumber"
     , to_char(ACC_CREATION_DATE,'yyyy-MM-dd HH24:MM') "accCreationDate"
     , to_char(ACC_LAST_UPDATED,'yyyy-MM-dd HH24:MM') "accLastUpdate"
-    , ACC_BALANCE "accBalance"  
+    , ROUND(ACC_BALANCE,2) "accBalance"  
     FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.USERDATA u 
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 
         ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CURRENCY c 
@@ -86,7 +86,7 @@ module.exports.getById = ({accId}) =>{
     , ACC_NUMBER "accNumber"
     , ACC_CREATION_DATE "accCreationDate"
     , ACC_LAST_UPDATED "accLastUpdate"
-    , ACC_BALANCE "accBalance"  
+    , round(ACC_BALANCE,2) "accBalance"  
     FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.USERDATA u 
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 
         ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CURRENCY c 
@@ -115,7 +115,7 @@ module.exports.getByAccNumberLike = ({ accNumber }) => {
     , ACC_NUMBER "accNumber"
     , ACC_CREATION_DATE "accCreationDate"
     , ACC_LAST_UPDATED "accLastUpdate"
-    , ACC_BALANCE "accBalance"  
+    , round(ACC_BALANCE,2) "accBalance"  
     FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.USERDATA u 
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 
         ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CURRENCY c 
@@ -144,7 +144,7 @@ module.exports.getByAccNumberExact = ({ accNumber }) => {
     , ACC_NUMBER "accNumber"
     , ACC_CREATION_DATE "accCreationDate"
     , ACC_LAST_UPDATED "accLastUpdate"
-    , ACC_BALANCE "accBalance"  
+    , round(ACC_BALANCE,2) "accBalance"  
     FROM BUDGETMAN.ACCOUNT a INNER JOIN BUDGETMAN.USERDATA u 
         ON a.USR_ID = u.USR_ID INNER JOIN BUDGETMAN.BANK b 
         ON a.BNK_ID =b.BNK_ID INNER JOIN BUDGETMAN.CURRENCY c 
@@ -208,7 +208,7 @@ module.exports.updateAccount = ({accId, usrId, curId, accNumber, accBalance})=>{
         set USR_ID = :usrId
         , CUR_ID = :curId
         , ACC_NUMBER = :accNumber
-        , ACC_BALANCE = :accBalance
+        , ACC_BALANCE =  :accBalance
         , ACC_LAST_UPDATED = sysdate
         where ACC_ID = :accId  
         RETURNING ACC_ID into :accId
