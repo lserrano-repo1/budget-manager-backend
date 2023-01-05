@@ -14,6 +14,7 @@ module.exports.accountCreate = async (req,res,next)=>{
         usrId: req.body.usrId,
         bnkId: req.body.bnkId,
         curId: req.body.curId,
+        accNumber:req.body.accNumber,
         accBalance: req.body.accBalance
     };
 
@@ -31,12 +32,14 @@ module.exports.accountCreate = async (req,res,next)=>{
 
         res.status(200).json({
             message: "New account has been created!",
-            accId: outBinds.accId[0]
+            accId: outBinds.accId[0],
+            accNumber: req.body.accNumber,
         });
     } catch (error) {
         console.error(error);
         return res.status(400).json({
-            error:error
+            error:error,
+            message:"Account number creation failed"
         });
     };
 };

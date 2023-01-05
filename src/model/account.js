@@ -22,7 +22,7 @@ module.exports.create = ({usrId, bnkId, curId, accNumber, accBalance}) =>{
     console.info(inOutParams);
 
     const sql_create_account = `INSERT INTO BUDGETMAN.ACCOUNT 
-    (USR_ID
+    (   USR_ID
         , BNK_ID
         , CUR_ID
         , ACC_NUMBER
@@ -35,6 +35,7 @@ module.exports.create = ({usrId, bnkId, curId, accNumber, accBalance}) =>{
         :accBalance
         )
     RETURNING ACC_ID into accId `;
+    
     console.log(sql_create_account);
     console.log(`inOutParams:`);
     console.log(inOutParams);
