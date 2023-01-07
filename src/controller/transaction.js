@@ -28,11 +28,20 @@ module.exports.create  = async(req,res,next)=>{
         console.log(outBinds);
         console.log("1.2 trnId:");
         console.log(outBinds.trnId[0]);
+        console.log("-----------------------------");
 
-        res.status(200).json({
-            message: "New transaction created",
+        if(outBinds.trnId[0]!==undefined){
+             res.status(200).json({
+            message: " ---> New transaction created",
             trnId: outBinds.trnId[0]
         });
+        } else {
+            return res.status(400).json({
+                message: "Error transaction was not created",
+                trnId: ''
+            });
+        }
+       
     } catch (error) {
         console.error(error);
         return res.status(400).json({

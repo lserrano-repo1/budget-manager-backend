@@ -27,19 +27,18 @@ module.exports.create = ({usrId, bnkId, curId, accNumber, accBalance}) =>{
         , CUR_ID
         , ACC_NUMBER
         , ACC_BALANCE
-    ) VALUES (
-        :usrId,
+    ) VALUES (:usrId,
         :bnkId,
         :curId,
         :accNumber,
         :accBalance
         )
-    RETURNING ACC_ID into accId `;
+    RETURNING ACC_ID into :accId `;
     
     console.log(sql_create_account);
     console.log(`inOutParams:`);
     console.log(inOutParams);
-    return pool(sql_create_bank, inOutParams, { autoCommit: true });
+    return pool(sql_create_account, inOutParams, { autoCommit: true });
 };
 
 
@@ -50,7 +49,7 @@ module.exports.create = ({usrId, bnkId, curId, accNumber, accBalance}) =>{
  */
 module.exports.getAll =()=>{
     console.log('--- Account Model: GET ALL  ---');
-    const sql_getAll_accounts = `SELECT ACC_ID "accId"
+    const sql_getAll_accounts = ` SELECT ACC_ID "id", ACC_ID "accId"
     , (u.USR_SALUTATION||' '||u.USR_FIRST_NAME||' '||u.USR_LAST_NAME) "usrName"
     , b.BNK_NAME "bankName" 
     , c.CUR_ABBREVIATION "curName"
