@@ -13,8 +13,9 @@ module.exports={
         poolMin:10,
         poolMax:10,
         poolIncrement:0,
-    },
+    }
+    /*,
     oracleClient:{
         address:process.env.ORA_CLI
-    }
+    }*/
 }

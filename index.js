@@ -40,7 +40,7 @@ app.use(routesNotFound);
 oracle.start().then(()=>{
     console.log('Oracle DB connected and ready');
     app.listen(server.port, ()=>{
-        console.log(`Server listening on port : ${server.port}`);
+        console.log(`Budget Manager Backend server listening on port : ${server.port}`);
     })
 }).catch((error)=>{
     console.log('index x464:'+error);

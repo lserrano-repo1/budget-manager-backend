@@ -4,15 +4,21 @@ const path = require('path');
 
 const {oracleConf} = require('./../config/config');
 
-
-const clientPath = path.join('C:','oracle','Oracle21c','bin');
-
-oracledb.initOracleClient({libDir:clientPath});
+/* Activate following 2 lines for local development ONLY */
+//const clientPath = path.join('C:','oracle','Oracle21c','bin');
+//oracledb.initOracleClient({libDir:clientPath});
 
 module.exports.start = async() => {
-    console.log(oracleConf);
-    console.log(`Oracle client binaries at: ${clientPath}`);
-    await oracledb.createPool(oracleConf);
+    try {
+        console.log('Oracle config is:');
+        console.log(oracleConf);
+        //console.log(`Oracle client binaries at: ${clientPath}`);
+        await oracledb.createPool(oracleConf);
+    } catch (error) {
+        console.log('An error occurred starting the connection...');
+        console.log(error);
+    }
+    
 };
 
 
