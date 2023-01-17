@@ -4,12 +4,13 @@ const path = require('path');
 
 const {oracleConf} = require('./../config/config');
 
+
 /* Activate following 2 lines for local development ONLY */
 //const clientPath = path.join('C:','oracle','Oracle21c','bin');
 //oracledb.initOracleClient({libDir:clientPath});
 
 module.exports.start = async() => {
-    try {
+   try {
         console.log('Oracle config is:');
         console.log(oracleConf);
         //console.log(`Oracle client binaries at: ${clientPath}`);
@@ -23,11 +24,11 @@ module.exports.start = async() => {
 
 
 module.exports.close = async()=>{
-    await oracledb.getPool().close(0);
+    await oracledb.getPool("default").close(0);
 };
 
 module.exports.pool = async(statement, binds=[], opts={}) => {
-    console.log('----- ORACLE ----');
+    console.log('----- ORACLE DB POOL ----');
     let conn;
     let result=[];
 
@@ -51,8 +52,10 @@ module.exports.pool = async(statement, binds=[], opts={}) => {
                 await conn.close();
             } catch(error){
                 console.log('Oracle closing DB: '+error);
+                throw error;
             }
         }
+        
     }
 
 
