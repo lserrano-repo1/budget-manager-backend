@@ -18,6 +18,7 @@ module.exports.start = async() => {
     } catch (error) {
         console.log('An error occurred starting the connection...');
         console.log(error);
+        throw error;
     }
     
 };
