@@ -15,3 +15,31 @@ docker run -e ORACLE_USER=budgetman -e ORACLE_PASS=budgetman -e ORACLE_CONNSTR=1
 
 
 docker run -p 8500:8500 budgetman-backend:1.0.0
+
+
+------------------ Kubernetes ----------------------
+kubectl get po -A
+kubectl get nodes
+
+-- Crear el deployement 
+kubectl create deployment hello-minikube --image=kicbase/echo-server:1.0
+
+-- Exponer lo en la red
+kubectl expose deployment hello-minikube --type=NodePort --port=8080
+kubectl expose deployment hello-minikube --type=LoadBalancer --port=8080
+kubectl expose deployment hello-minikube --name=mytestservice --type=ClusterIP --port=8080
+
+--Inspeccionar tipos de servicios y otra informacion
+kubectl get services
+
+-- Eliminar 
+kubectl delete service hello-minikube
+
+-- obtener la IP interna del pod
+kubectl get po -o wide
+
+
+
+
+
+kubectl expose deployment hello-minikube --type=LoadBalancer --port=8080
