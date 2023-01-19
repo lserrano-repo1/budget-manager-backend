@@ -39,7 +39,13 @@ kubectl delete service hello-minikube
 kubectl get po -o wide
 
 
-
-
-
 kubectl expose deployment hello-minikube --type=LoadBalancer --port=8080
+
+--- Create pod
+kubectl apply -f .\test-pod.yml
+kubectl get pods
+
+--- Create deployment
+kubectl apply -f .\test-deployment.yml
+kubectl get deployments
+
