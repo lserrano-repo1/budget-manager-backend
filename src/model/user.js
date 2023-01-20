@@ -58,8 +58,10 @@ module.exports.hashPassword = ({email}) => {
     const sql_get_hashed_password = `select USR_PASSWORD 
         from BUDGETMAN.USERDATA 
         where USR_EMAIL = :email`;
+
+        return pool(sql_get_hashed_password, inputParams);
     
-    return pool(sql_get_hashed_password, inputParams);
+     
 }
 
 

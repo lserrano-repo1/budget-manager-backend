@@ -21,18 +21,21 @@ module.exports.userLogin = async(req,res,next)=>{
         email:req.body.email
         , password: req.body.password
     };
+    console.log("inputParams:");
     console.log(inputParams);
 
     try{
         const {rows:hashedPassword} = await User.hashPassword(inputParams);
-        console.log(hashedPassword);
+        
 
         if(hashedPassword.length>0){
             
-            console.log(`Hashed stored password`);
+            console.log(`{Hashed stored password, inputParams.password, bcrypt.compareSync}`);
             console.log(hashedPassword[0]['USR_PASSWORD']);
+            console.log(req.body.password);
+            console.log( bcrypt.compareSync(req.body.password, hashedPassword[0].USR_PASSWORD));
 
-            if( bcrypt.compareSync(inputParams.password, hashedPassword[0]['USR_PASSWORD'])  ){
+            if( bcrypt.compareSync(req.body.password, hashedPassword[0].USR_PASSWORD)  ){
                 const {outBinds} = await User.login(inputParams);
                 
                 console.log(`userLogin outParam`);
@@ -45,8 +48,11 @@ module.exports.userLogin = async(req,res,next)=>{
                     email: inputParams.email,
                     token: usr_token[0],
                 });
+
+                
             }
         }
+
 
         return res.status(200).json({
             message: "Login data is not valid",
@@ -71,6 +77,7 @@ module.exports.userLogin = async(req,res,next)=>{
  */
 module.exports.registerNewUser = async(req,res,next)=>{
     console.log('--- User Controller: Create ---');
+    
     const inputParams = {
           email: req.body.email
         , password: req.body.password
@@ -78,6 +85,9 @@ module.exports.registerNewUser = async(req,res,next)=>{
         , firstName: req.body.firstName
         , lastName: req.body.lastName
     };
+
+    console.log('----> Parameters used to create a new user:');
+    console.log(inputParams);
 
     try{
         const {outBinds} = await User.create(inputParams);

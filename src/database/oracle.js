@@ -40,12 +40,13 @@ module.exports.pool = async(statement, binds=[], opts={}) => {
         conn = await oracledb.getConnection();
         result = await conn.execute(statement, binds, opts);
         
-        console.log('RESULT:');
+        console.log('--- RESULT TO BE RETURNED ---');
         console.log(result);
+        console.log('-----------------------------');
         return result;
 
     } catch(error){
-        console.error('Oracle opening DB: '+error);
+        console.error('ERROR @ Oracle opening DB: '+error);
         throw error;
     } finally{
         if(conn){
