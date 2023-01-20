@@ -40,9 +40,9 @@ module.exports.pool = async(statement, binds=[], opts={}) => {
         conn = await oracledb.getConnection();
         result = await conn.execute(statement, binds, opts);
         
-        console.log('--- RESULT TO BE RETURNED ---');
+        /*console.log('--- RESULT TO BE RETURNED ---');
         console.log(result);
-        console.log('-----------------------------');
+        console.log('-----------------------------');*/
         return result;
 
     } catch(error){
